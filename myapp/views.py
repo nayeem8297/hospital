@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
 from .models import Doctors
-from .forms import DoctorForm
+from .forms import DoctorForm , PaymentsForm
 import json
 
 @csrf_exempt
@@ -93,6 +93,21 @@ def partial_update_doctor(request, doctor_id):
             return JsonResponse({'errors': form.errors}, status=400)
     else:
         return HttpResponseBadRequest("Invalid HTTP method.")
+
+
+@csrf_exempt
+def payments_post(request):
+    if request.method == 'POST':
+        form = PaymentsForm(request.POST)
+        if form.is_valid():
+            item = form.save()
+            return JsonResponse({'id':item.id,
+                                 'patient_name':item.patient_name,
+                                 'medical_bill':item.medical_bill,
+                                 'hospital_bill':item.hospital_bill,
+                                 'discharge_date':item.discharge_date})
+        
+        
 
 
 
