@@ -9,8 +9,11 @@ class Doctors(models.Model):
     timings = models.CharField(max_length=20)
     charge = models.DecimalField(max_digits=5,decimal_places=0)
 
-
-
+class Payments(models.Model):
+    patient_name = models.CharField(max_length=20)
+    medical_bill = models.DecimalField(max_digits=10,decimal_places=2)
+    hospital_bill = models.DecimalField(max_digits=10,decimal_places=2)
+    discharge_date = models.DateField()
 
 
 
